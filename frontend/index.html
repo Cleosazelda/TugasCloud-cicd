@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cleosa Zelda | Cloud Architect</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,900;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #fafafa;
+    --text: #1a1a1a;
+    --accent: #ffb7c5;
+    --glass: rgba(255, 255, 255, 0.7);
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Background */
+.blob {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--accent), transparent);
+    filter: blur(80px);
+    z-index: -1;
+}
+
+/* Hero */
+.hero {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CRUD SECTION */
+.crud {
+    padding: 50px 10%;
+}
+
+input {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background: black;
+    color: white;
+    cursor: pointer;
+}
+
+.card {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+}
+</style>
+</head>
+
+<body>
+
+<div class="blob"></div>
+
+<section class="hero">
+    <h1>Cleosa Zelda</h1>
+    <p>Cloud Architect 🚀</p>
+</section>
+
+<section class="crud">
+    <h2>My Experience</h2>
+
+    <!-- FORM -->
+    <input id="name" placeholder="Nama">
+    <input id="role" placeholder="Role">
+    <button onclick="addData()">Tambah</button>
+
+    <!-- LIST -->
+    <div id="list"></div>
+</section>
+
+<script>
+const API = "http://127.0.0.1:5000/api/data";
+
+function loadData() {
+    fetch(API)
+    .then(res => res.json())
+    .then(data => {
+        const list = document.getElementById("list");
+        list.innerHTML = "";
+
+        data.forEach(item => {
+            list.innerHTML += `
+                <div class="card">
+                    <b>${item.name}</b> - ${item.role}
+                    <br><br>
+                    <button onclick="editData(${item.id}, '${item.name}', '${item.role}')">Edit</button>
+                    <button onclick="deleteData(${item.id})">Hapus</button>
+                </div>
+            `;
+        });
+    });
+}
+
+function addData() {
+    const name = document.getElementById("name").value;
+    const role = document.getElementById("role").value;
+
+    fetch(API, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ name, role })
+    }).then(() => loadData());
+}
+
+function deleteData(id) {
+    fetch(API + "/" + id, { method: "DELETE" })
+    .then(() => loadData());
+}
+
+function editData(id, oldName, oldRole) {
+    const name = prompt("Edit Nama:", oldName);
+    const role = prompt("Edit Role:", oldRole);
+
+    fetch(API + "/" + id, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ name, role })
+    }).then(() => loadData());
+}
+
+loadData();
+</script>
+
+</body>
+</html>
