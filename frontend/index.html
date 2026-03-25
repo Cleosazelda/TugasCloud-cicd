@@ -5,54 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cleosa Zelda | Cloud Architect</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;900&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,900;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
-    --bg: #0f172a;
-    --text: #f1f5f9;
-    --accent: #22c55e;
-    --glass: rgba(255,255,255,0.05);
+    --bg: #fafafa;
+    --text: #1a1a1a;
+    --accent: #ffb7c5;
+    --glass: rgba(255, 255, 255, 0.7);
 }
 
 body {
     margin: 0;
     background: var(--bg);
-    color: var(--text);
     font-family: 'Montserrat', sans-serif;
 }
 
-/* HERO */
+/* Background */
+.blob {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--accent), transparent);
+    filter: blur(80px);
+    z-index: -1;
+}
+
+/* Hero */
 .hero {
-    height: 70vh;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
 }
 
-.hero h1 {
-    font-size: 50px;
-    margin: 0;
-}
-
-.hero p {
-    font-size: 20px;
-    opacity: 0.7;
-}
-
-/* CI/CD BADGE */
-.badge {
-    margin-top: 20px;
-    padding: 10px 20px;
-    border-radius: 30px;
-    background: var(--accent);
-    color: black;
-    font-weight: bold;
-}
-
-/* CRUD */
+/* CRUD SECTION */
 .crud {
     padding: 50px 10%;
 }
@@ -61,48 +49,46 @@ input {
     padding: 10px;
     margin: 5px;
     border-radius: 10px;
-    border: none;
-    width: 150px;
+    border: 1px solid #ddd;
 }
 
 button {
     padding: 10px 20px;
     border: none;
     border-radius: 20px;
-    background: var(--accent);
-    color: black;
+    background: black;
+    color: white;
     cursor: pointer;
 }
 
-/* CARD */
 .card {
     margin-top: 15px;
     padding: 15px;
     border-radius: 15px;
     background: var(--glass);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
 }
 </style>
 </head>
 
 <body>
 
-<section class="hero">
-    <h1>🚀 Cleosa Zelda</h1>
-    <p>Cloud Architect | DevOps | CI/CD Engineer</p>
+<div class="blob"></div>
 
-    <!-- INI PENANDA DEPLOY -->
-    <div class="badge">CI/CD</div>
+<section class="hero">
+    <h1>Cleosa Zelda</h1>
+    <p>Cloud Architect 🚀</p>
 </section>
 
 <section class="crud">
-    <h2>💻 My Experience (Live from Backend)</h2>
+    <h2>My Experience</h2>
 
+    <!-- FORM -->
     <input id="name" placeholder="Nama">
     <input id="role" placeholder="Role">
     <button onclick="addData()">Tambah</button>
 
+    <!-- LIST -->
     <div id="list"></div>
 </section>
 
