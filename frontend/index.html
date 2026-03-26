@@ -1,74 +1,137 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cleosa Zelda | Cloud Architect</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dicki Yudha | Cloud Architect</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,900;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
-<style>
-:root {
-    --bg: #fafafa;
-    --text: #1a1a1a;
-    --accent: #ffb7c5;
-    --glass: rgba(255, 255, 255, 0.7);
-}
+    <style>
+        :root {
+            /* Warna Tema Terang */
+            --bg: #f8f9fa;
+            --text: #212529;
+            --accent: #007bff;
+            --glass: rgba(255, 255, 255, 0.8);
+            --border: #dee2e6;
+        }
 
-body {
-    margin: 0;
-    background: var(--bg);
-    font-family: 'Montserrat', sans-serif;
-}
+        body {
+            margin: 0;
+            background: var(--bg);
+            font-family: 'Roboto', sans-serif;
+            color: var(--text);
+            transition: background 0.3s ease;
+        }
 
-/* Background */
-.blob {
-    position: fixed;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, var(--accent), transparent);
-    filter: blur(80px);
-    z-index: -1;
-}
+        /* Background Blob - Disesuaikan agar lebih soft di tema terang */
+        .blob {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 123, 255, 0.2), transparent);
+            filter: blur(120px);
+            z-index: -1;
+            top: -100px;
+            left: -100px;
+        }
 
-/* Hero */
-.hero {
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
 
-/* CRUD SECTION */
-.crud {
-    padding: 50px 10%;
-}
+        .hero h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            font-weight: 700;
+            color: var(--text);
+        }
 
-input {
-    padding: 10px;
-    margin: 5px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-}
+        .hero p {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            font-weight: 400;
+            color: #555;
+        }
 
-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    background: black;
-    color: white;
-    cursor: pointer;
-}
+        /* CRUD SECTION */
+        .crud {
+            padding: 50px 10%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-.card {
-    margin-top: 15px;
-    padding: 15px;
-    border-radius: 15px;
-    background: var(--glass);
-    backdrop-filter: blur(10px);
-}
-</style>
+        .crud h2 {
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+
+        .form-container {
+            margin-bottom: 30px;
+        }
+
+        input {
+            padding: 12px;
+            margin: 5px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--text);
+            width: 200px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            background: var(--accent);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            margin-left: 5px;
+        }
+
+        .btn-edit {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .card {
+            margin-top: 15px;
+            padding: 20px;
+            border-radius: 15px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-info b {
+            font-size: 1.1rem;
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
@@ -76,74 +139,90 @@ button {
 <div class="blob"></div>
 
 <section class="hero">
-    <h1>Cleosa Zelda</h1>
+    <h1>Dicki Yudha</h1>
     <p>Cloud Architect 🚀</p>
 </section>
-
 
 <section class="crud">
     <h2>My Experience</h2>
 
-    <!-- FORM -->
-    <input id="name" placeholder="Nama">
-    <input id="role" placeholder="Role">
-    <button onclick="addData()">Tambah</button>
+    <div class="form-container">
+        <input id="name" placeholder="Nama Instansi/Proyek">
+        <input id="role" placeholder="Role Anda">
+        <button onclick="addData()">Tambah</button>
+    </div>
 
-    <!-- LIST -->
     <div id="list"></div>
 </section>
 
 <script>
-const API = "http://34.226.119.62:5000/api/data";
+    // Pastikan API URL ini aktif dan bisa diakses
+    const API = "http://34.226.119.62:5000/api/data";
 
-function loadData() {
-    fetch(API)
-    .then(res => res.json())
-    .then(data => {
-        const list = document.getElementById("list");
-        list.innerHTML = "";
+    function loadData() {
+        fetch(API)
+        .then(res => res.json())
+        .then(data => {
+            const list = document.getElementById("list");
+            list.innerHTML = "";
 
-        data.forEach(item => {
-            list.innerHTML += `
-                <div class="card">
-                    <b>${item.name}</b> - ${item.role}
-                    <br><br>
-                    <button onclick="editData(${item.id}, '${item.name}', '${item.role}')">Edit</button>
-                    <button onclick="deleteData(${item.id})">Hapus</button>
-                </div>
-            `;
+            data.forEach(item => {
+                list.innerHTML += `
+                    <div class="card">
+                        <div class="card-info">
+                            <b>${item.name}</b>
+                            <span>${item.role}</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-edit" onclick="editData(${item.id}, '${item.name}', '${item.role}')">Edit</button>
+                            <button class="btn-delete" onclick="deleteData(${item.id})">Hapus</button>
+                        </div>
+                    </div>
+                `;
+            });
+        })
+        .catch(err => console.error("Gagal mengambil data:", err));
+    }
+
+    function addData() {
+        const nameInput = document.getElementById("name");
+        const roleInput = document.getElementById("role");
+        
+        if(!nameInput.value || !roleInput.value) return alert("Isi semua field ya!");
+
+        fetch(API, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ name: nameInput.value, role: roleInput.value })
+        }).then(() => {
+            loadData();
+            nameInput.value = "";
+            roleInput.value = "";
         });
-    });
-}
+    }
 
-function addData() {
-    const name = document.getElementById("name").value;
-    const role = document.getElementById("role").value;
+    function deleteData(id) {
+        if(confirm("Yakin ingin menghapus data ini?")) {
+            fetch(API + "/" + id, { method: "DELETE" })
+            .then(() => loadData());
+        }
+    }
 
-    fetch(API, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ name, role })
-    }).then(() => loadData());
-}
+    function editData(id, oldName, oldRole) {
+        const name = prompt("Edit Nama:", oldName);
+        const role = prompt("Edit Role:", oldRole);
 
-function deleteData(id) {
-    fetch(API + "/" + id, { method: "DELETE" })
-    .then(() => loadData());
-}
+        if(name && role) {
+            fetch(API + "/" + id, {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({ name, role })
+            }).then(() => loadData());
+        }
+    }
 
-function editData(id, oldName, oldRole) {
-    const name = prompt("Edit Nama:", oldName);
-    const role = prompt("Edit Role:", oldRole);
-
-    fetch(API + "/" + id, {
-        method: "PUT",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ name, role })
-    }).then(() => loadData());
-}
-
-loadData();
+    // Jalankan saat pertama kali buka web
+    loadData();
 </script>
 
 </body>

@@ -5,7 +5,7 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}) 
 
 data = [
-    {"id": 1, "name": "Cleosa", "role": "Cloud Architect"}
+    {"id": 1, "name": "Yudha", "role": "Cloud Architect"}
 ]
 
 @app.route('/api/data', methods=['GET'])
