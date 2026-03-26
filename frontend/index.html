@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dicki Yudha | Cloud Architect</title>
+    <title>Dicki Yudha | Cloud Architect (Dark Mode)</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Warna Tema Terang */
-            --bg: #f8f9fa;
-            --text: #212529;
-            --accent: #007bff;
-            --glass: rgba(255, 255, 255, 0.8);
-            --border: #dee2e6;
+            /* Warna Tema Gelap Modern */
+            --bg: #121212;             /* Background hitam pekat */
+            --text: #e0e0e0;           /* Teks putih abu-abu agar lembut di mata */
+            --accent: #1e90ff;         /* Biru aksen yang terang dan kontras */
+            --glass: rgba(255, 255, 255, 0.05); /* Efek kaca tipis di background gelap */
+            --border: #333333;         /* Warna border yang gelap tapi kelihatan */
+            --card-bg: #1e1e1e;        /* Background card sedikit lebih terang dari body */
         }
 
         body {
@@ -25,16 +26,16 @@
             transition: background 0.3s ease;
         }
 
-        /* Background Blob - Disesuaikan agar lebih soft di tema terang */
+        /* Background Blob - Biru lembut di belakang */
         .blob {
             position: fixed;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(0, 123, 255, 0.2), transparent);
+            background: radial-gradient(circle, rgba(30, 144, 255, 0.15), transparent);
             filter: blur(120px);
             z-index: -1;
-            top: -100px;
-            left: -100px;
+            top: -150px;
+            left: -150px;
         }
 
         /* Hero Section */
@@ -52,13 +53,14 @@
             margin: 0;
             font-weight: 700;
             color: var(--text);
+            letter-spacing: -1px;
         }
 
         .hero p {
             font-size: 1.5rem;
             margin-top: 10px;
             font-weight: 400;
-            color: #555;
+            color: #aaaaaa;
         }
 
         /* CRUD SECTION */
@@ -72,20 +74,28 @@
             border-bottom: 2px solid var(--accent);
             display: inline-block;
             margin-bottom: 25px;
+            color: var(--text);
         }
 
         .form-container {
             margin-bottom: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         input {
             padding: 12px;
-            margin: 5px;
             border-radius: 8px;
             border: 1px solid var(--border);
-            background: white;
+            background: #1a1a1a;        /* Input background gelap */
             color: var(--text);
-            width: 200px;
+            flex-grow: 1;
+            min-width: 200px;
+        }
+
+        input::placeholder {
+            color: #666666;
         }
 
         button {
@@ -96,7 +106,7 @@
             color: white;
             cursor: pointer;
             font-weight: 600;
-            transition: transform 0.2s;
+            transition: all 0.2s ease;
         }
 
         button:hover {
@@ -104,32 +114,43 @@
             filter: brightness(1.1);
         }
 
+        /* Tombol Aksi di Card */
         .btn-delete {
-            background: #dc3545;
+            background: #dc3545;       /* Merah untuk Hapus */
             margin-left: 5px;
         }
 
         .btn-edit {
-            background: #ffc107;
-            color: #212529;
+            background: #ffc107;       /* Kuning untuk Edit */
+            color: #121212;            /* Teks gelap di background kuning */
         }
 
         .card {
             margin-top: 15px;
             padding: 20px;
             border-radius: 15px;
-            background: var(--glass);
+            background: var(--card-bg); /* Card sedikit lebih terang */
             backdrop-filter: blur(10px);
             border: 1px solid var(--border);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); /* Shadow lebih gelap */
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .card-info b {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             display: block;
+            color: var(--text);
+        }
+
+        .card-info span {
+            color: #aaaaaa;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 5px;
         }
     </style>
 </head>
@@ -156,10 +177,11 @@
 </section>
 
 <script>
-    // Pastikan API URL ini aktif dan bisa diakses
-    const API = "http://34.226.119.62:5000/api/data";
+    // PENTING: Menggunakan trik dinamis supaya otomatis deteksi localhost atau IP AWS
+    const API = `http://${window.location.hostname}:5000/api/data`;
 
     function loadData() {
+        console.log("Mengambil data dari API:", API);
         fetch(API)
         .then(res => res.json())
         .then(data => {
@@ -181,7 +203,10 @@
                 `;
             });
         })
-        .catch(err => console.error("Gagal mengambil data:", err));
+        .catch(err => {
+            console.error("Gagal mengambil data:", err);
+            // alert("Gagal mengambil data. Pastikan Backend sudah jalan di Port 5000!");
+        });
     }
 
     function addData() {
